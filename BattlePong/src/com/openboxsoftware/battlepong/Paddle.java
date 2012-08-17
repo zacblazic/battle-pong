@@ -16,16 +16,16 @@ public class Paddle extends View {
     public static final float PADDLE_WIDTH_RATIO = 0.35f;
     public static final float PADDLE_HEIGHT_RATIO = 0.035f;
     
-    private Rect paddle;
-    private Paint green;
+    protected Rect paddle;
+    protected Paint green;
     
-    private int screenWidth;
-    private int screenHeight;
+    protected int screenWidth;
+    protected int screenHeight;
     
-    private int bottomX;
-    private int bottomY;
+    protected int bottomX;
+    protected int bottomY;
     
-    private boolean touchLocked = false;
+    protected boolean touchLocked = false;
     
     public Paddle(Context context) {
         super(context);
