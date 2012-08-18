@@ -1,5 +1,5 @@
 
-package com.openboxsoftware.battlepong;
+package com.openboxsoftware.battlepong.util;
 
 import android.graphics.Color;
 

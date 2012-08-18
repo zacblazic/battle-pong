@@ -1,5 +1,10 @@
 package com.openboxsoftware.battlepong;
 
+
+import com.openboxsoftware.battlepong.util.OpenBoxColor;
+import com.openboxsoftware.battlepong.views.HorizontalPaddle;
+import com.openboxsoftware.battlepong.views.VerticalPaddle;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;

@@ -1,4 +1,4 @@
-package com.openboxsoftware.battlepong;
+package com.openboxsoftware.battlepong.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

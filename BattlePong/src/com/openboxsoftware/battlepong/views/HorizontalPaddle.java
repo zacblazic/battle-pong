@@ -1,11 +1,12 @@
 
-package com.openboxsoftware.battlepong;
+package com.openboxsoftware.battlepong.views;
+
+import com.openboxsoftware.battlepong.util.OpenBoxColor;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class HorizontalPaddle extends Paddle {
 	
