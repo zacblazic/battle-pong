@@ -60,9 +60,9 @@ public class VerticalPaddle extends Paddle {
         {
             paddle.top = 0;
         }
-        else if(paddle.bottom > screenHeight) 
+        else if((paddle.top + (int)getPaddleHeight()) > screenHeight) 
         {
-            paddle.bottom = screenHeight - (int)getPaddleHeight();
+            paddle.top = screenHeight - (int)getPaddleHeight();
         }
         
         paddle.right = paddle.left + (int)getPaddleWidth();
@@ -109,5 +109,4 @@ public class VerticalPaddle extends Paddle {
             return super.onTouchEvent(event);
         }
     }
-
 }

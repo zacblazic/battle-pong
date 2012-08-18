@@ -13,11 +13,9 @@ public class Paddle extends View {
 	protected float PADDLE_WIDTH_RATIO = 0.35f;
     protected float PADDLE_HEIGHT_RATIO = 0.035f;
     
+    protected int screenWidth;
+    protected int screenHeight;
     protected Rect paddle;
-    
-    public static int screenWidth;
-    public static int screenHeight;
-    
     protected boolean touchLocked = false;
     
     public Paddle(Context context) {

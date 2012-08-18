@@ -50,11 +50,13 @@ public class HorizontalPaddle extends Paddle {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         
+        
+        
         if(paddle.left < 0) {
         	paddle.left = 0;
         }
             
-        if(paddle.right > screenWidth) {
+        if((paddle.left + (int)getPaddleWidth()) > screenWidth) {
         	paddle.left = screenWidth - (int)getPaddleWidth();
         }
         
