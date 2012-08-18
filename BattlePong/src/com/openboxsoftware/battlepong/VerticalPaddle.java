@@ -34,7 +34,7 @@ public class VerticalPaddle extends Paddle
             
         if(paddle.bottom > screenHeight) 
         {
-            sideY = screenHeight - (int)getPaddleWidth();
+            sideY = screenHeight - (int)getPaddleHeight();
         }
         
         paddle.set(sideX, sideY, (int)getPaddleWidth() + sideX, (int)getPaddleHeight() + sideY);
