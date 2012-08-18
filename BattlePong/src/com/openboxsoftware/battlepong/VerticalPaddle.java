@@ -48,7 +48,7 @@ public class VerticalPaddle extends Paddle {
 			paddle.left = screenWidth - (int)getPaddleWidth();
 			
 		} else {
-			//paddle.left = 0;
+			paddle.left = 0;
 		}	
 	}
 	
