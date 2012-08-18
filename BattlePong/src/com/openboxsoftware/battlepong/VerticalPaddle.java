@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 
 public class VerticalPaddle extends Paddle 
 {
-	protected Paint blue;
+	protected Paint paddleColor;
 
 	public VerticalPaddle(Context context) {
 		super(context);
@@ -19,8 +19,8 @@ public class VerticalPaddle extends Paddle
         sideX = 0;
         sideY = (screenHeight / 2) - ((int)getPaddleHeight() / 2);
 		
-        blue = new Paint();
-        blue.setColor(Color.BLUE);
+        paddleColor = new Paint();
+        paddleColor.setColor(Color.argb(255, 137, 27, 145));
 	}
 	
 	@Override
@@ -31,14 +31,13 @@ public class VerticalPaddle extends Paddle
         {
             sideY = 0;
         }
-            
-        if(paddle.bottom > screenHeight) 
+        else if(paddle.bottom > screenHeight) 
         {
             sideY = screenHeight - (int)getPaddleHeight();
         }
         
         paddle.set(sideX, sideY, (int)getPaddleWidth() + sideX, (int)getPaddleHeight() + sideY);
-        canvas.drawRect(paddle, blue);
+        canvas.drawRect(paddle, paddleColor);
         
         this.invalidate();
     }
