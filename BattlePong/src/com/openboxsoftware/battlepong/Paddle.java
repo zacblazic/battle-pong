@@ -10,6 +10,8 @@ import android.view.WindowManager;
 
 public class Paddle extends View {
     
+	private static final int TOUCH_FORGIVENESS = 25;
+	
 	protected float PADDLE_WIDTH_RATIO = 0.35f;
     protected float PADDLE_HEIGHT_RATIO = 0.035f;
     
@@ -25,7 +27,7 @@ public class Paddle extends View {
         paddle = new Rect();
     }
     
-    private void initializeScreenSize() {
+    private final void initializeScreenSize() {
         Context context = this.getContext();
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
@@ -37,11 +39,18 @@ public class Paddle extends View {
         screenHeight = size.y;
     }
     
-    public final float getPaddleWidth() {
+    protected final float getPaddleWidth() {
         return screenWidth * PADDLE_WIDTH_RATIO;
     }
     
-    public final float getPaddleHeight() {
+    protected final float getPaddleHeight() {
         return screenHeight * PADDLE_HEIGHT_RATIO;
+    }
+    
+    protected boolean isTouched(int x, int y) {
+    	return (x >= paddle.left - TOUCH_FORGIVENESS) 
+    			&& (x <= paddle.right + TOUCH_FORGIVENESS)
+                && (y >= paddle.top - TOUCH_FORGIVENESS) 
+                && (y <= paddle.bottom + TOUCH_FORGIVENESS);
     }
 }

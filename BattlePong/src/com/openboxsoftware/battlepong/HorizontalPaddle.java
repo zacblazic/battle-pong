@@ -87,8 +87,7 @@ public class HorizontalPaddle extends Paddle {
         	return true;
         	
         } 
-        else if(x >= paddle.left && x <= paddle.right
-	                && y >= paddle.top && y <= paddle.bottom) {
+        else if(isTouched(x, y)) {
 	            
         	if(action == MotionEvent.ACTION_DOWN) 
         	{
