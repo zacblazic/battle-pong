@@ -12,13 +12,20 @@ public class BattlePongActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        HorizontalPaddle horPaddleBottom = new HorizontalPaddle(this);
+        HorizontalPaddle horPaddleTop = new HorizontalPaddle(this);
+        horPaddleTop.setBottomY(0);
         
-        HorizontalPaddle horPaddle = new HorizontalPaddle(this);
-        VerticalPaddle verPaddle = new VerticalPaddle(this);
+        VerticalPaddle verPaddleLeft = new VerticalPaddle(this);
+        VerticalPaddle verPaddleRight = new VerticalPaddle(this);
+        verPaddleRight.setSideX(VerticalPaddle.screenWidth - (int)verPaddleRight.getPaddleWidth());
         
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
         layout.setBackgroundColor(OpenBoxColor.GREY);
-        layout.addView(horPaddle);
-        layout.addView(verPaddle);
+        layout.addView(horPaddleBottom);
+        layout.addView(horPaddleTop);
+        layout.addView(verPaddleLeft);
+        layout.addView(verPaddleRight);
     }
 }

@@ -16,8 +16,8 @@ public class Paddle extends View {
     
     protected Rect paddle;
     
-    protected int screenWidth;
-    protected int screenHeight;
+    public static int screenWidth;
+    public static int screenHeight;
     
     protected int bottomX;
     protected int bottomY;
@@ -113,5 +113,15 @@ public class Paddle extends View {
     
     public final float getPaddleHeight() {
         return screenHeight * PADDLE_HEIGHT_RATIO;
+    }
+    
+    public void setSideX(int s)
+    {
+    	sideX = s;
+    }
+    
+    public void setBottomY(int b)
+    {
+    	bottomY = b;
     }
 }
