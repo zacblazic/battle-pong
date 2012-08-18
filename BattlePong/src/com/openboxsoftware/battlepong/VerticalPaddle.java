@@ -6,21 +6,50 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
-public class VerticalPaddle extends Paddle 
-{
+public class VerticalPaddle extends Paddle {
+	
+	public static final int LOCATION_LEFT = 0x00000001;
+	public static final int LOCATION_RIGHT = 0x00000002;
+	
 	protected Paint paddleColor;
 
 	public VerticalPaddle(Context context) {
 		super(context);
 		
 		PADDLE_HEIGHT_RATIO = 0.25f;
-		PADDLE_WIDTH_RATIO = 0.045f;
+		PADDLE_WIDTH_RATIO = 0.06f;
 
-        sideX = 0;
-        sideY = (screenHeight / 2) - ((int)getPaddleHeight() / 2);
+        initializeLocation(LOCATION_LEFT);
 		
         paddleColor = new Paint();
         paddleColor.setColor(Color.argb(255, 137, 27, 145));
+	}
+
+	public VerticalPaddle(Context context, int location) {
+		super(context);
+		
+		PADDLE_HEIGHT_RATIO = 0.25f;
+		PADDLE_WIDTH_RATIO = 0.055f;
+		
+		initializeLocation(location);
+
+        paddleColor = new Paint();
+        paddleColor.setColor(Color.argb(255, 137, 27, 145));
+	}
+	
+	private void initializeLocation(int location) {
+
+		paddle.top = (screenHeight / 2) - ((int)getPaddleHeight() / 2);
+		
+		if(location == LOCATION_LEFT) {
+			paddle.left = 0;
+			
+		} else if (location == LOCATION_RIGHT) {
+			paddle.left = screenWidth - (int)getPaddleWidth();
+			
+		} else {
+			//paddle.left = 0;
+		}	
 	}
 	
 	@Override
@@ -29,14 +58,15 @@ public class VerticalPaddle extends Paddle
         
         if(paddle.top < 0) 
         {
-            sideY = 0;
+            paddle.top = 0;
         }
         else if(paddle.bottom > screenHeight) 
         {
-            sideY = screenHeight - (int)getPaddleHeight();
+            paddle.bottom = screenHeight - (int)getPaddleHeight();
         }
         
-        paddle.set(sideX, sideY, (int)getPaddleWidth() + sideX, (int)getPaddleHeight() + sideY);
+        paddle.right = paddle.left + (int)getPaddleWidth();
+        paddle.bottom = paddle.top + (int)getPaddleHeight();
         canvas.drawRect(paddle, paddleColor);
         
         this.invalidate();
@@ -58,7 +88,7 @@ public class VerticalPaddle extends Paddle
         		touchLocked = false;
         	}
         	
-        	sideY = y - ((int)getPaddleHeight() / 2);
+        	paddle.top = y - ((int)getPaddleHeight() / 2);
         	
         	return true;
         	

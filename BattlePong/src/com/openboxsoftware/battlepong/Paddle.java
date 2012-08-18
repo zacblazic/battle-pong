@@ -19,17 +19,11 @@ public class Paddle extends View {
     public static int screenWidth;
     public static int screenHeight;
     
-    protected int bottomX;
-    protected int bottomY;
-    
-    protected int sideX;
-    protected int sideY;
-    
     protected boolean touchLocked = false;
     
     public Paddle(Context context) {
         super(context);
-        initializeWidthHeight();
+        initializeScreenSize();
         
 //        bottomX = (screenWidth / 2) - ((int)getPaddleWidth() / 2);
 //        bottomY = screenHeight - (int)getPaddleHeight();
@@ -96,10 +90,11 @@ public class Paddle extends View {
 //        }
     //}
     
-    private void initializeWidthHeight() {
+    private void initializeScreenSize() {
         Context context = this.getContext();
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
+        
         Point size = new Point();
         display.getSize(size);
         
@@ -113,15 +108,5 @@ public class Paddle extends View {
     
     public final float getPaddleHeight() {
         return screenHeight * PADDLE_HEIGHT_RATIO;
-    }
-    
-    public void setSideX(int s)
-    {
-    	sideX = s;
-    }
-    
-    public void setBottomY(int b)
-    {
-    	bottomY = b;
     }
 }

@@ -7,32 +7,59 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 public class HorizontalPaddle extends Paddle {
+	
+	public static final int LOCATION_TOP = 0x00000001;
+	public static final int LOCATION_BOTTOM = 0x00000002;
         
-    protected Paint green;
+	protected Paint green;
     
-    public HorizontalPaddle(Context context) {
-        super(context);
+	public HorizontalPaddle(Context context) {
+		super(context);
         
-        bottomX = (screenWidth / 2) - ((int)getPaddleWidth() / 2);
-        bottomY = screenHeight - (int)getPaddleHeight();
+        initializeLocation(LOCATION_TOP);
         
         green = new Paint();
-        green.setColor(OpenBoxColor.GREEN);
+        green.setColor(OpenBoxColor.GREEN); 
+	}
+	
+    public HorizontalPaddle(Context context, int location) {
+        super(context);
+        
+        initializeLocation(location);
+        
+        green = new Paint();
+        green.setColor(OpenBoxColor.GREEN); 
     }
 
-    @Override
+    private void initializeLocation(int location) {
+		
+    	paddle.left = (screenWidth / 2) - ((int)getPaddleWidth() / 2);
+    	
+    	if(location == LOCATION_TOP) {
+	        paddle.top = 0;
+	        
+		} else if (location == LOCATION_BOTTOM) {
+			paddle.top = screenHeight - (int)getPaddleHeight();
+			
+		} else {
+			paddle.top = 0;
+		}
+	}
+
+	@Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         
         if(paddle.left < 0) {
-                bottomX = 0;
-            }
+        	paddle.left = 0;
+        }
             
-            if(paddle.right > screenWidth) {
-                bottomX = screenWidth - (int)getPaddleWidth();
-            }
+        if(paddle.right > screenWidth) {
+        	paddle.left = screenWidth - (int)getPaddleWidth();
+        }
         
-        paddle.set(bottomX, bottomY, (int)getPaddleWidth() + bottomX, (int)getPaddleHeight() + bottomY);
+        paddle.right = paddle.left + (int)getPaddleWidth();
+        paddle.bottom = paddle.top + (int)getPaddleHeight();
         canvas.drawRect(paddle, green);
         
         this.invalidate();
@@ -53,14 +80,13 @@ public class HorizontalPaddle extends Paddle {
         		touchLocked = false;
         	}
         	
-        	bottomX = x - ((int)getPaddleWidth() / 2);
+        	paddle.left = x - ((int)getPaddleWidth() / 2);
         	
         	return true;
         	
         } 
         else if(x >= paddle.left && x <= paddle.right
-	                && y >= paddle.top && y <= paddle.bottom) 
-        {
+	                && y >= paddle.top && y <= paddle.bottom) {
 	            
         	if(action == MotionEvent.ACTION_DOWN) 
         	{
