@@ -72,7 +72,7 @@ public class VerticalPaddle extends Paddle {
         this.invalidate();
     }
 
-    @Override
+	 @Override
     public boolean onTouchEvent(MotionEvent event) {
         
         int action = event.getAction();
@@ -80,32 +80,36 @@ public class VerticalPaddle extends Paddle {
     	int x = (int)event.getX();
         int y = (int)event.getY();
         
-        if(touchLocked) 
-        {
-        	
-        	if(action == MotionEvent.ACTION_UP) 
-        	{
-        		touchLocked = false;
+        switch(action) {
+        	case MotionEvent.ACTION_DOWN : {
+        		if(isTouched(x, y)) {
+                	touchLocked = true;
+                	
+                	return true;
+                }
+        		
+        		break;
+        	}
+       
+        	case MotionEvent.ACTION_UP : {
+        		if(touchLocked) {
+        			touchLocked = false;
+        			return true;
+        		}
+        		
+        		break;
         	}
         	
-        	paddle.top = y - ((int)getPaddleHeight() / 2);
-        	
-        	return true;
-        	
-        } 
-        else if(isTouched(x, y)) 
-        {
-	            
-        	if(action == MotionEvent.ACTION_DOWN) 
-        	{
-        		touchLocked = true;
+        	case MotionEvent.ACTION_MOVE : {
+        		if(touchLocked) {
+        			paddle.top = y - ((int)getPaddleHeight() / 2);
+        			return true;
+        		}
+        		
+        		break;
         	}
-        	
-            return true;
         }
-        else
-        {
-            return super.onTouchEvent(event);
-        }
+        
+        return super.onTouchEvent(event);
     }
 }

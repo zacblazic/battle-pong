@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class HorizontalPaddle extends Paddle {
 	
@@ -75,30 +76,36 @@ public class HorizontalPaddle extends Paddle {
     	int x = (int)event.getX();
         int y = (int)event.getY();
         
-        if(touchLocked) {
-        	
-        	if(action == MotionEvent.ACTION_UP) 
-        	{
-        		touchLocked = false;
+        switch(action) {
+        	case MotionEvent.ACTION_DOWN : {
+        		if(isTouched(x, y)) {
+                	touchLocked = true;
+                	
+                	return true;
+                }
+        		
+        		break;
+        	}
+       
+        	case MotionEvent.ACTION_UP : {
+        		if(touchLocked) {
+        			touchLocked = false;
+        			return true;
+        		}
+        		
+        		break;
         	}
         	
-        	paddle.left = x - ((int)getPaddleWidth() / 2);
-        	
-        	return true;
-        	
-        } 
-        else if(isTouched(x, y)) {
-	            
-        	if(action == MotionEvent.ACTION_DOWN) 
-        	{
-        		touchLocked = true;
+        	case MotionEvent.ACTION_MOVE : {
+        		if(touchLocked) {
+        			paddle.left = x - ((int)getPaddleWidth() / 2);
+        			return true;
+        		}
+        		
+        		break;
         	}
-        	
-            return true;
         }
-        else 
-        {
-            return super.onTouchEvent(event);
-        }
+        
+        return super.onTouchEvent(event);
     }
 }
