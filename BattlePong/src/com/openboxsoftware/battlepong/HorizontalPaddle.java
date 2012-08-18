@@ -1,44 +1,39 @@
+
 package com.openboxsoftware.battlepong;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
-public class VerticalPaddle extends Paddle 
-{
-	protected Paint blue;
+public class HorizontalPaddle extends Paddle {
+        
+    protected Paint green;
+    
+    public HorizontalPaddle(Context context) {
+        super(context);
+        
+        bottomX = (screenWidth / 2) - ((int)getPaddleWidth() / 2);
+        bottomY = screenHeight - (int)getPaddleHeight();
+        
+        green = new Paint();
+        green.setColor(OpenBoxColor.GREEN);
+    }
 
-	public VerticalPaddle(Context context) {
-		super(context);
-		
-		PADDLE_HEIGHT_RATIO = 0.25f;
-		PADDLE_WIDTH_RATIO = 0.045f;
-
-        sideX = 0;
-        sideY = (screenHeight / 2) - ((int)getPaddleHeight() / 2);
-		
-        blue = new Paint();
-        blue.setColor(Color.BLUE);
-	}
-	
-	@Override
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         
-        if(paddle.top < 0) 
-        {
-            sideY = 0;
-        }
+        if(paddle.left < 0) {
+                bottomX = 0;
+            }
             
-        if(paddle.bottom > screenHeight) 
-        {
-            sideY = screenHeight - (int)getPaddleWidth();
-        }
+            if(paddle.right > screenWidth) {
+                bottomX = screenWidth - (int)getPaddleWidth();
+            }
         
-        paddle.set(sideX, sideY, (int)getPaddleWidth() + sideX, (int)getPaddleHeight() + sideY);
-        canvas.drawRect(paddle, blue);
+        paddle.set(bottomX, bottomY, (int)getPaddleWidth() + bottomX, (int)getPaddleHeight() + bottomY);
+        canvas.drawRect(paddle, green);
         
         this.invalidate();
     }
@@ -51,15 +46,14 @@ public class VerticalPaddle extends Paddle
     	int x = (int)event.getX();
         int y = (int)event.getY();
         
-        if(touchLocked) 
-        {
+        if(touchLocked) {
         	
         	if(action == MotionEvent.ACTION_UP) 
         	{
         		touchLocked = false;
         	}
         	
-        	sideY = y - ((int)getPaddleHeight() / 2);
+        	bottomX = x - ((int)getPaddleWidth() / 2);
         	
         	return true;
         	
@@ -75,10 +69,9 @@ public class VerticalPaddle extends Paddle
         	
             return true;
         }
-        else
+        else 
         {
             return super.onTouchEvent(event);
         }
     }
-
 }
