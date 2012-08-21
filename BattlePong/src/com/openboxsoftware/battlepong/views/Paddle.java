@@ -2,48 +2,43 @@
 package com.openboxsoftware.battlepong.views;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
+
+import com.openboxsoftware.battlepong.BattlePongActivity;
 
 public class Paddle extends View {
     
-	private static final int TOUCH_FORGIVENESS = 25;
+	public static final int TOP = 0x00000001;
+	public static final int BOTTOM = 0x00000002;
+	public static final int LEFT = 0x00000003;
+	public static final int RIGHT = 0x00000004;
+	
+	private final int TOUCH_FORGIVENESS = 25;
 	
 	protected float PADDLE_WIDTH_RATIO = 0.35f;
     protected float PADDLE_HEIGHT_RATIO = 0.035f;
     
-    protected int screenWidth;
-    protected int screenHeight;
+    protected final int screenWidth;
+    protected final int screenHeight;
+    
     protected Rect paddle;
     protected boolean touchLocked = false;
     
     public Paddle(Context context) {
         super(context);
-        initializeScreenSize();
+        
+        screenWidth = ((BattlePongActivity)context).getScreenWidth();
+        screenHeight = ((BattlePongActivity)context).getScreenHeight();
         
         paddle = new Rect();
     }
     
-    private final void initializeScreenSize() {
-        Context context = this.getContext();
-        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        
-        Point size = new Point();
-        display.getSize(size);
-        
-        screenWidth = size.x;
-        screenHeight = size.y;
-    }
-    
-    protected final float getPaddleWidth() {
+    public final float getPaddleWidth() {
         return screenWidth * PADDLE_WIDTH_RATIO;
     }
     
-    protected final float getPaddleHeight() {
+    public final float getPaddleHeight() {
         return screenHeight * PADDLE_HEIGHT_RATIO;
     }
     
