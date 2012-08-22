@@ -97,7 +97,7 @@ public class Ball extends View {
 	private boolean isNextFrameReady() {
 		long currentTimeMillis = System.currentTimeMillis();
 		
-		if((currentTimeMillis - lastTimeMillis) >= 6) {
+		if((currentTimeMillis - lastTimeMillis) >= 1000/125) {
 			lastTimeMillis = currentTimeMillis;
 			
 			return true;
