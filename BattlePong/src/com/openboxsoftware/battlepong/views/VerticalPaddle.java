@@ -41,13 +41,16 @@ public class VerticalPaddle extends Paddle {
 
 		paddle.top = (screenHeight / 2) - ((int)getPaddleHeight() / 2);
 		
-		if(location == LOCATION_LEFT) {
+		if(location == LOCATION_LEFT) 
+		{
 			paddle.left = 0;
-			
-		} else if (location == LOCATION_RIGHT) {
+		}
+		else if (location == LOCATION_RIGHT) 
+		{
 			paddle.left = screenWidth - (int)getPaddleWidth();
-			
-		} else {
+		}
+		else 
+		{
 			paddle.left = 0;
 		}	
 	}
@@ -72,7 +75,7 @@ public class VerticalPaddle extends Paddle {
         this.invalidate();
     }
 
-	 @Override
+	/* @Override
     public boolean onTouchEvent(MotionEvent event) {
         
         int action = event.getAction();
@@ -111,5 +114,5 @@ public class VerticalPaddle extends Paddle {
         }
         
         return super.onTouchEvent(event);
-    }
+    }*/
 }
