@@ -87,8 +87,8 @@ public class Ball extends View {
 			}
 			
 			canvas.drawCircle(x, y, BALL_RADIUS, paint);
-			notifyObservers();
 		}
+		notifyObservers();
 		
 		this.invalidate();
 	}
