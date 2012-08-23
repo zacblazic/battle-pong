@@ -39,6 +39,8 @@ public class BattlePongActivity extends Activity
         leftVerticalPaddle = new VerticalPaddle(this, VerticalPaddle.LOCATION_LEFT);
         rightVerticalPaddle = new VerticalPaddle(this, VerticalPaddle.LOCATION_RIGHT);
         ball = new Ball(this);
+        ball.addObserver(leftVerticalPaddle);
+        ball.addObserver(rightVerticalPaddle);
         
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
         layout.setBackgroundColor(OpenBoxColor.GREY);

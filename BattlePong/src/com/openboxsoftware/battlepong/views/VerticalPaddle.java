@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 public class VerticalPaddle extends Paddle {
 	
@@ -12,6 +11,10 @@ public class VerticalPaddle extends Paddle {
 	public static final int LOCATION_RIGHT = 0x00000002;
 	
 	protected Paint paddleColor;
+	
+	protected int location;
+	
+	private long lastAIUpdateMillis;
 
 	public VerticalPaddle(Context context) {
 		super(context);
@@ -32,9 +35,11 @@ public class VerticalPaddle extends Paddle {
 		PADDLE_WIDTH_RATIO = 0.055f;
 		
 		initializeLocation(location);
-
+		this.location = location;
         paddleColor = new Paint();
         paddleColor.setColor(Color.argb(255, 137, 27, 145));
+        
+        lastAIUpdateMillis = System.currentTimeMillis();
 	}
 	
 	private void initializeLocation(int location) {
@@ -74,45 +79,65 @@ public class VerticalPaddle extends Paddle {
         
         this.invalidate();
     }
+	
+	public void update(Ball ball)
+	{
+		followBall(ball);
+	}
+	
+	public void followBall (Ball ball)
+	{
+		/*float distance = ball.getX() - paddle.centerX();
+		
+		if (distance < 0) distance *= -1;
+		
+		if (distance < screenWidth/2)
+		{
+			moveTo(ball.getY());
+		}*/
+		
+		if (ball.getXVelocity() > 0 && location == LOCATION_RIGHT)
+		{
+			moveTo(ball.getY());
+		}
+		
+		else if (ball.getXVelocity() < 0 && location == LOCATION_LEFT)
+		{
+			moveTo(ball.getY());
+		}
+	}
+	
+	private boolean isNextAIUpdateReady() {
+		long currentTimeMillis = System.currentTimeMillis();
+		
+		if((currentTimeMillis - lastAIUpdateMillis) >= 1000/125) {
+			lastAIUpdateMillis = currentTimeMillis;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void moveTo(float y)
+	{
+		float ppu = 18.5F;
+	
+		if(!isNextAIUpdateReady()) {
+			return;
+		}
+		
+		if(paddle.top != (int)(y - (getPaddleHeight()/2)))
+		{
+			if ((int)(y - (getPaddleHeight()/2)) > paddle.top)
+				paddle.top += ppu;
+			
+			
+			if ((int)(y - (getPaddleHeight()/2)) < paddle.top)
+				paddle.top -= ppu;
+			
+			
+		}		
+	}
 
-	/* @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        
-        int action = event.getAction();
-    	
-    	int x = (int)event.getX();
-        int y = (int)event.getY();
-        
-        switch(action) {
-        	case MotionEvent.ACTION_DOWN : {
-        		if(isTouched(x, y)) {
-                	touchLocked = true;
-                	
-                	return true;
-                }
-        		
-        		break;
-        	}
-       
-        	case MotionEvent.ACTION_UP : {
-        		if(touchLocked) {
-        			touchLocked = false;
-        			return true;
-        		}
-        		
-        		break;
-        	}
-        	
-        	case MotionEvent.ACTION_MOVE : {
-        		if(touchLocked) {
-        			paddle.top = y - ((int)getPaddleHeight() / 2);
-        			return true;
-        		}
-        		
-        		break;
-        	}
-        }
-        
-        return super.onTouchEvent(event);
-    }*/
 }

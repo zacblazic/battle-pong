@@ -1,5 +1,9 @@
 package com.openboxsoftware.battlepong.views;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -28,6 +32,8 @@ public class Ball extends View {
 	
 	private long lastTimeMillis;
 	
+	private List<VerticalPaddle> paddles = new ArrayList<VerticalPaddle>();
+	
 	public Ball(Context context) {
 		super(context);
 		
@@ -51,28 +57,34 @@ public class Ball extends View {
 		x += xVelocity;
 		y += yVelocity;
 		
-		if(isNextFrameReady()) {
-			if(isTopCollision()) {
+		if(isNextFrameReady()) 
+		{
+			if(isTopCollision()) 
+			{
 				y = BALL_RADIUS;
 				yVelocity = -yVelocity;
 			}
 			
-			if(isBottomCollision()) {
+			if(isBottomCollision()) 
+			{
 				y = screenHeight - BALL_RADIUS;
 				yVelocity = -yVelocity;
 			}
 			
-			if(isLeftCollision()) {
+			if(isLeftCollision()) 
+			{
 				x = BALL_RADIUS;
 				xVelocity = -xVelocity;
 			}
 			
-			if(isRightCollision()) {
+			if(isRightCollision()) 
+			{
 				x = screenWidth - BALL_RADIUS;
 				xVelocity = -xVelocity;
 			}
 			
 			canvas.drawCircle(x, y, BALL_RADIUS, green);
+			notifyObservers();
 		}
 		
 		this.invalidate();
@@ -104,5 +116,22 @@ public class Ball extends View {
 		}
 		
 		return false;
+	}
+
+	public float getX() {return x;}
+	public float getY() {return y;}
+	public float getXVelocity() {return xVelocity;}
+	
+	public void addObserver(VerticalPaddle pad)
+	{
+		paddles.add(pad);
+	}
+	
+	public void notifyObservers()
+	{
+		for (VerticalPaddle pad : paddles) 
+		{
+			pad.update(this);
+		}
 	}
 }
