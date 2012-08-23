@@ -3,6 +3,7 @@ package com.openboxsoftware.battlepong.views;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -23,7 +24,7 @@ public class Ball extends View {
 	private final int screenWidth;
 	private final int screenHeight;
 	
-	private Paint green;
+	private Paint paint;
 	
 	//private final Paddle[] paddles;
 	
@@ -34,18 +35,20 @@ public class Ball extends View {
 	
 	private List<VerticalPaddle> paddles = new ArrayList<VerticalPaddle>();
 	
-	public Ball(Context context) {
+	public Ball(Context context, int color) {
 		super(context);
 		
 		screenWidth = ((BattlePongActivity)context).getScreenWidth();
         screenHeight = ((BattlePongActivity)context).getScreenHeight();
         //paddles = ((BattlePongActivity)context).getPaddles();
         
-        green = new Paint();
-        green.setColor(OpenBoxColor.GREEN);
+        paint = new Paint();
+        paint.setColor(color);
         
-        x = (screenWidth / 2);
-        y = (screenHeight / 2);
+        Random random = new Random();
+        
+        x = random.nextInt(screenWidth);
+        y = random.nextInt(screenHeight);
         
         lastTimeMillis = System.currentTimeMillis();
 	}
@@ -83,7 +86,7 @@ public class Ball extends View {
 				xVelocity = -xVelocity;
 			}
 			
-			canvas.drawCircle(x, y, BALL_RADIUS, green);
+			canvas.drawCircle(x, y, BALL_RADIUS, paint);
 			notifyObservers();
 		}
 		
