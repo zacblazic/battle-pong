@@ -1,7 +1,6 @@
 package com.openboxsoftware.battlepong.views;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +10,6 @@ import android.graphics.Paint;
 import android.view.View;
 
 import com.openboxsoftware.battlepong.BattlePongActivity;
-import com.openboxsoftware.battlepong.util.OpenBoxColor;
 
 
 public class Ball extends View {
